@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WOLF RED GOD PANEL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- FIREBASE SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBF6FwVHYwx2DN4Wsg68iRaLTIrk2hRfak",
+    authDomain: "panel-e4929.firebaseapp.com",
+    projectId: "panel-e4929",
+    storageBucket: "panel-e4929.firebasestorage.app",
+    messagingSenderId: "475758608678",
+    appId: "1:475758608678:web:bcf51fcd4fec62463601e7"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  window.loginGoogle = async function(){
+    try{
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      document.getElementById("email").value = user.email;
+      document.getElementById("email").disabled = true;
+      document.getElementById("submitBtn").disabled = false;
+      document.getElementById("loginBtn").style.display = "none";
+      document.getElementById("logoutBtn").style.display = "block";
+    }catch(e){
+      alert("Login failed: " + e.message);
+    }
+  }
+
+  window.logoutGoogle = function(){
+    signOut(auth).then(()=>{
+      document.getElementById("email").value = "";
+      document.getElementById("email").disabled = false;
+      document.getElementById("submitBtn").disabled = true;
+      document.getElementById("loginBtn").style.display = "block";
+      document.getElementById("logoutBtn").style.display = "none";
+    });
+  }
+
+  onAuthStateChanged(auth, user => {
+    if(user){
+      document.getElementById("email").value = user.email;
+      document.getElementById("email").disabled = true;
+      document.getElementById("submitBtn").disabled = false;
+      document.getElementById("loginBtn").style.display = "none";
+      document.getElementById("logoutBtn").style.display = "block";
+    }else{
+      document.getElementById("submitBtn").disabled = true;
+      document.getElementById("loginBtn").style.display = "block";
+      document.getElementById("logoutBtn").style.display = "none";
+    }
+  });
+</script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+body{background:radial-gradient(circle at top,#400000,#000);min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;overflow:hidden;}
+.panel{width:95%;max-width:420px;background:rgba(255,0,0,0.08);backdrop-filter:blur(15px);border-radius:20px;padding:25px;border:2px solid rgba(255,0,0,0.4);box-shadow:0 0 40px #ff0000;animation:glow 2s infinite alternate;}
+@keyframes glow{from{box-shadow:0 0 20px #ff0000;}to{box-shadow:0 0 50px #ff0000;}}
+h1{text-align:center;color:#ff4444;margin-bottom:20px;letter-spacing:2px;}
+input,select,textarea{width:100%;padding:12px;margin-bottom:12px;border-radius:10px;border:none;outline:none;background:rgba(0,0,0,0.6);color:#fff;box-shadow:inset 0 0 10px #ff0000;}
+textarea{resize:none;height:80px;}
+button{width:100%;padding:14px;background:linear-gradient(45deg,#ff0000,#800000);border:none;border-radius:12px;color:white;font-size:16px;cursor:pointer;box-shadow:0 0 20px #ff0000;transition:.3s;}
+button:hover{transform:scale(1.05);box-shadow:0 0 35px #ff0000;}
+.status{text-align:center;margin-top:15px;color:#00ff88;display:none;}
+.telegram{position:fixed;bottom:20px;right:20px;background:#ff0000;padding:15px;border-radius:50%;box-shadow:0 0 25px #ff0000;animation:pulse 1.5s infinite;}
+.telegram img{width:30px;}
+@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
+</style>
+</head>
+<body>
+
+<div class="panel">
+<h1>🔥 WOLF RED PANEL 🔥</h1>
+
+<button id="loginBtn" onclick="loginGoogle()">Login with Google</button>
+<button id="logoutBtn" style="display:none;" onclick="logoutGoogle()">Logout</button>
+
+<input id="name" placeholder="Your Name">
+<input id="uid" placeholder="Game UID">
+<input id="email" placeholder="Email Address" disabled>
+<input id="whatsapp" placeholder="WhatsApp Number">
+
+<select id="package">
+<option value="">Select Package</option>
+<option>15 Days - 150₹</option>
+<option>1 Month - 300₹</option>
+<option>2 Months - 450₹</option>
+<option>Permanent - 1000₹</option>
+</select>
+
+<select id="device">
+<option value="">Device</option>
+<option>Android</option>
+<option>iOS</option>
+</select>
+
+<select id="login">
+<option value="">Login Method</option>
+<option>Google</option>
+<option>Facebook</option>
+<option>Guest</option>
+</select>
+
+<textarea id="note" placeholder="Extra Note (Optional)"></textarea>
+
+<button id="submitBtn" onclick="send()" disabled>🔥 SUBMIT 🔥</button>
+<div class="status" id="status">Request Sent Successfully 🔥</div>
+</div>
+
+<a class="telegram" href="https://t.me/YOUR_CHANNEL" target="_blank">
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg">
+</a>
+
+<script>
+const BOT_TOKEN = "7675133509:AAFyTlLdRacG4GzY0DfTfp1a4rhpRgvUV5E";
+const CHAT_ID = "7679153847";
+
+function send(){
+const name=document.getElementById("name").value;
+const uid=document.getElementById("uid").value;
+const email=document.getElementById("email").value;
+const wp=document.getElementById("whatsapp").value;
+const pkg=document.getElementById("package").value;
+const device=document.getElementById("device").value;
+const login=document.getElementById("login").value;
+const note=document.getElementById("note").value;
+
+if(!name||!uid||!wp||!pkg||!device||!login){
+navigator.vibrate(300);
+alert("Fill all required fields!");
+return;
+}
+
+// Telegram message
+let text=`🔥 NEW REQUEST 🔥%0A
+👤 Name: ${name}%0A
+🆔 UID: ${uid}%0A
+📧 Email: ${email}%0A
+📱 WhatsApp: ${wp}%0A
+📦 Package: ${pkg}%0A
+📱 Device: ${device}%0A
+🔐 Login: ${login}%0A
+📝 Note: ${note}`;
+
+fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${text}`)
+.then(()=>{
+document.getElementById("status").style.display="block";
+setTimeout(()=>{document.getElementById("status").style.display="none";},3000);
+});
+}
+</script>
+
+</body>
+</html>
